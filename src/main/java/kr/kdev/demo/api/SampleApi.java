@@ -26,7 +26,7 @@ public class SampleApi {
     }
 
     @GetMapping("/stat/{year:[0-9]{4}}")
-    public ResponseEntity<?> getStatOfYear(@PathVariable("year") Year year) {
+    public ResponseEntity<Map<String, String>> getStatOfYear(@PathVariable("year") Year year) {
         log.info("Request for year: {}", year);
 
         LocalDate fromDate = year.atDay(1);
@@ -36,8 +36,8 @@ public class SampleApi {
                 "to", toDate.format(DATE_FORMAT)));
     }
 
-    @GetMapping("/stat/{yearMonth:[0-9]{4}\\-[0-9]{2}}")
-    public ResponseEntity<?> getStatOfYearMonth(
+    @GetMapping("/stat/{yearMonth:[0-9]{4}-[0-9]{2}}")
+    public ResponseEntity<Map<String, String>> getStatOfYearMonth(
             @DateTimeFormat(pattern = "yyyy-MM")
             @PathVariable("yearMonth") YearMonth yearMonth) {
         log.info("Request for year-month: {}", yearMonth);
@@ -50,7 +50,7 @@ public class SampleApi {
     }
 
     @GetMapping("/stat/{year}/{month}")
-    public ResponseEntity<?> getStatOfYearMonth(@PathVariable("year") Year year,
+    public ResponseEntity<Map<String, String>> getStatOfYearMonth(@PathVariable("year") Year year,
                                                 @PathVariable("month") Month month) {
         return getStatOfYearMonth(YearMonth.of(year.getValue(), month));
     }
